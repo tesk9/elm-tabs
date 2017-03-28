@@ -5,7 +5,9 @@ module View exposing (view)
 -}
 
 import Html exposing (..)
+import Html.A11y exposing (..)
 import Html.Attributes
+import Html.Attributes.A11y as A11yAttributes
 import Html.CssHelpers
 import Html.Events exposing (onClick)
 import Key exposing (..)
@@ -34,8 +36,8 @@ view groupId model =
                 , onEnter (SelectCurrentTab identifier)
                 , onLeft SelectPreviousTab
                 , onRight SelectNextTab
-                , A11y.controls (panelId section identifier)
-                , A11y.selected isSelected
+                , A11yAttributes.controls (panelId section identifier)
+                , A11yAttributes.selected isSelected
                 ]
                 [ tabContent ]
 
@@ -43,8 +45,8 @@ view groupId model =
         viewPanel isSelected section identifier panelContent =
             tabPanel
                 [ id (panelId section identifier)
-                , labelledby (tabId section identifier)
-                , A11y.hidden (not isSelected)
+                , A11yAttributes.labelledBy (tabId section identifier)
+                , A11yAttributes.hidden (not isSelected)
                 , Html.Attributes.hidden (not isSelected)
                 ]
                 [ panelContent ]
