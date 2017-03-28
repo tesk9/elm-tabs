@@ -38,7 +38,7 @@ model =
 
 toViewTuple : a -> ( String, String ) -> ( a, Html.Html Never, Html.Html Never )
 toViewTuple index ( tabContent, panelContent ) =
-    ( index, Html.map never <| header tabContent, Html.map never <| panel panelContent )
+    ( index, header tabContent, panel panelContent )
 
 
 header : String -> Html.Html msg
