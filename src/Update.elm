@@ -4,19 +4,39 @@ module Update exposing (update, Msg(..))
 @docs Msg, update
 -}
 
-import Model
+import Model exposing (Model)
+import List.Zipper as Zipper
 
 
-{-| Msg
+{-| Msg for tabs.
 -}
-type Msg
+type Msg comparable
     = NoOp
+    | SelectPreviousTab
+    | SelectCurrentTab comparable
+    | SelectNextTab
 
 
-{-| update
+{-| Map over this to select a tab.
 -}
-update : Msg -> Model.Model -> ( Model.Model, Cmd c )
+update : Msg comparable -> Model (Msg comparable) comparable -> Model (Msg comparable) comparable
 update msg model =
     case msg of
         NoOp ->
-            model ! []
+            model
+
+        SelectPreviousTab ->
+            model
+                |> Zipper.previous
+                |> Maybe.withDefault (Zipper.last model)
+
+        SelectCurrentTab identifier ->
+            model
+                |> Zipper.first
+                |> Zipper.find (\( id, _, _ ) -> id == identifier)
+                |> Maybe.withDefault model
+
+        SelectNextTab ->
+            model
+                |> Zipper.next
+                |> Maybe.withDefault (Zipper.first model)
