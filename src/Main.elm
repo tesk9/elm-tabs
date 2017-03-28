@@ -5,35 +5,34 @@ module Main exposing (main)
 -}
 
 import Html
-import Json.Decode exposing (Value, decodeString)
-import Flags exposing (decoder)
 import Model exposing (Model)
 import Update exposing (update)
 import View exposing (view)
+import List.Zipper as Z
 
 
 {-| main
 -}
-main : Program String Model Update.Msg
+main : Program Never (Model (Update.Msg Int) Int) (Update.Msg Int)
 main =
-    Html.programWithFlags
-        { init = init
+    Html.beginnerProgram
+        { model = model
         , update = update
-        , subscriptions = subscriptions
-        , view = view
+        , view = view "test-view-container"
         }
 
 
-init : String -> ( Model, Cmd msg )
-init pageData =
-    case decodeString decoder pageData of
-        Ok flags ->
-            Model.init flags ! []
-
-        Err err ->
-            Debug.crash err
-
-
-subscriptions : a -> Sub b
-subscriptions =
-    always Sub.none
+model : Model (Update.Msg Int) Int
+model =
+    Maybe.withDefault (Z.singleton ( 0, Html.text "failed", Html.text "failed" )) <|
+        Z.fromList <|
+            List.indexedMap
+                (\index ( tabContent, panelContent ) ->
+                    ( index, Html.h2 [] [ Html.text tabContent ], Html.div [] [ Html.text panelContent ] )
+                )
+                [ ( "Tab1", "Panel1" )
+                , ( "Tab2", "Panel2" )
+                , ( "Tab3", "Panel3" )
+                , ( "Tab4", "Panel4" )
+                , ( "Tab5", "Panel5" )
+                ]
