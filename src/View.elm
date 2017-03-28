@@ -43,7 +43,7 @@ view groupId model =
         div
             [ class [ Container ] ]
             [ Html.CssHelpers.style css
-            , div [] (tabList [ id groupId ] tabs :: panels)
+            , div [] (tabList [ id groupId, class [ TabList ] ] tabs :: panels)
             ]
 
 
@@ -61,6 +61,7 @@ viewTab : String -> Bool -> String -> comparable -> Html (Msg comparable) -> Htm
 viewTab groupId isSelected section identifier tabContent =
     tab
         [ id (tabId groupId section identifier)
+        , classList [ ( Tab, True ), ( SelectedTab, isSelected ) ]
         , onClick (SelectCurrentTab identifier)
         , onKeyDown
             [ enter (SelectCurrentTab identifier)
@@ -77,6 +78,7 @@ viewPanel : String -> Bool -> String -> comparable -> Html (Msg comparable) -> H
 viewPanel groupId isSelected section identifier panelContent =
     tabPanel
         [ id (panelId groupId section identifier)
+        , class [ TabPanel ]
         , A11yAttributes.labelledBy (tabId groupId section identifier)
         , A11yAttributes.hidden (not isSelected)
         , Html.Attributes.hidden (not isSelected)
