@@ -10,16 +10,16 @@ import List.Zipper as Zipper
 
 {-| Msg for tabs.
 -}
-type Msg comparable
+type Msg
     = NoOp
     | SelectPreviousTab
-    | SelectCurrentTab comparable
+    | SelectCurrentTab Int
     | SelectNextTab
 
 
 {-| Map over this to select a tab.
 -}
-update : Msg comparable -> Model (Msg comparable) comparable -> Model (Msg comparable) comparable
+update : Msg -> Model Msg -> Model Msg
 update msg model =
     case msg of
         NoOp ->

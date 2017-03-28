@@ -13,7 +13,7 @@ import List.Zipper as Z
 
 {-| main
 -}
-main : Program Never (Model (Update.Msg Int) Int) (Update.Msg Int)
+main : Program Never (Model Update.Msg) Update.Msg
 main =
     Html.beginnerProgram
         { model = model
@@ -22,7 +22,7 @@ main =
         }
 
 
-model : Model (Update.Msg Int) Int
+model : Model msg
 model =
     let
         default =

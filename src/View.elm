@@ -19,7 +19,7 @@ import Update exposing (Msg(..))
 
 {-| Create a tab interface. Pass in a unique id and a zipper of (tab header content, panel content) pairs.
 -}
-view : String -> Model (Msg comparable) comparable -> Html (Msg comparable)
+view : String -> Model Msg -> Html Msg
 view groupId model =
     let
         toTabPanelWithIds section isSelected ( id, tabContent, panelContent ) =
@@ -47,17 +47,17 @@ view groupId model =
             ]
 
 
-tabId : String -> String -> a -> String
+tabId : String -> String -> Int -> String
 tabId groupId section identifier =
     groupId ++ "-tab-" ++ section ++ toString identifier
 
 
-panelId : String -> String -> a -> String
+panelId : String -> String -> Int -> String
 panelId groupId section identifier =
     groupId ++ "-tabPanel-" ++ section ++ toString identifier
 
 
-viewTab : String -> Bool -> String -> comparable -> Html (Msg comparable) -> Html (Msg comparable)
+viewTab : String -> Bool -> String -> Int -> Html Msg -> Html Msg
 viewTab groupId isSelected section identifier tabContent =
     tab
         [ id (tabId groupId section identifier)
@@ -74,7 +74,7 @@ viewTab groupId isSelected section identifier tabContent =
         [ tabContent ]
 
 
-viewPanel : String -> Bool -> String -> comparable -> Html (Msg comparable) -> Html (Msg comparable)
+viewPanel : String -> Bool -> String -> Int -> Html Msg -> Html Msg
 viewPanel groupId isSelected section identifier panelContent =
     tabPanel
         [ id (panelId groupId section identifier)
