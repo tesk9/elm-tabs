@@ -1,4 +1,5 @@
 # elm-tabs
+![](https://travis-ci.org/tesk9/elm-tabs.svg?branch=master)
 
 Accessible tab widget using [`elm-html-a11y`](package.elm-lang.org/packages/tesk9/elm-html-a11y/latest).
 
