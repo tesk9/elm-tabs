@@ -1,7 +1,7 @@
-module Key exposing (onEnter, onRight, onLeft)
+module Key exposing (onKeyDown, enter, right, left)
 
 {-|
-@docs onEnter, onRight, onLeft
+@docs onKeyDown, enter, right, left
 -}
 
 import Html exposing (Attribute)
@@ -9,9 +9,13 @@ import Html.Events exposing (on, keyCode)
 import Json.Decode
 
 
-onKeyDown : Json.Decode.Decoder msg -> Attribute msg
-onKeyDown =
-    on "keydown"
+{-| Pass a list of decoders.
+
+    onKeyDown [ enter TheyHitEnterDoSomething, left DoSomeOtherThing ]
+-}
+onKeyDown : List (Json.Decode.Decoder msg) -> Attribute msg
+onKeyDown decoders =
+    on "keydown" (Json.Decode.oneOf decoders)
 
 
 succeedForKeyCode : Int -> msg -> Json.Decode.Decoder msg
@@ -27,22 +31,22 @@ succeedForKeyCode key msg =
     )
 
 
-{-| Listener for enter keydown.
+{-| For enter keydown.
 -}
-onEnter : msg -> Attribute msg
-onEnter msg =
-    onKeyDown (succeedForKeyCode 13 msg)
+enter : msg -> Json.Decode.Decoder msg
+enter msg =
+    succeedForKeyCode 13 msg
 
 
-{-| Listener for left arrow keydown.
+{-| For left arrow keydown.
 -}
-onLeft : msg -> Attribute msg
-onLeft msg =
-    onKeyDown (succeedForKeyCode 37 msg)
+left : msg -> Json.Decode.Decoder msg
+left msg =
+    succeedForKeyCode 37 msg
 
 
-{-| Listener for right arrow keydown.
+{-| For right arrow keydown.
 -}
-onRight : msg -> Attribute msg
-onRight msg =
-    onKeyDown (succeedForKeyCode 39 msg)
+right : msg -> Json.Decode.Decoder msg
+right msg =
+    succeedForKeyCode 39 msg

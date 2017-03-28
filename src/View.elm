@@ -33,9 +33,11 @@ view groupId model =
             tab
                 [ id (tabId section identifier)
                 , onClick (SelectCurrentTab identifier)
-                , onEnter (SelectCurrentTab identifier)
-                , onLeft SelectPreviousTab
-                , onRight SelectNextTab
+                , onKeyDown
+                    [ enter (SelectCurrentTab identifier)
+                    , left SelectPreviousTab
+                    , right SelectNextTab
+                    ]
                 , A11yAttributes.controls (panelId section identifier)
                 , A11yAttributes.selected isSelected
                 ]
