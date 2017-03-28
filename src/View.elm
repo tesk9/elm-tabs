@@ -19,11 +19,11 @@ import Update exposing (Msg(..))
 
 {-| Create a tab interface. Pass in a unique id and a zipper of (tab header content, panel content) pairs.
 -}
-view : String -> Model -> Html Msg
-view groupId model =
+view : Model -> Html Msg
+view { groupId, tabPanels } =
     let
         ( tabs, panels ) =
-            model
+            tabPanels
                 |> Zipper.map Model.tabAndPanel
                 |> Zipper.mapBefore (List.map (Model.section "previous-"))
                 |> Zipper.mapCurrent (Model.selected >> Model.section "current-")

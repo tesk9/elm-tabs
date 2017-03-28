@@ -1,16 +1,24 @@
-module Model exposing (Model, TabAndPanel, tabAndPanel, section, selected)
+module Model exposing (Model, TabPanels, TabAndPanel, tabAndPanel, section, selected)
 
 {-|
-@docs Model, TabAndPanel, section, selected
+@docs Model, TabPanels, TabAndPanel, tabAndPanel, section, selected
 -}
 
 import Html exposing (Html)
 import List.Zipper exposing (Zipper)
 
 
-{-| Zipper tabs are represented as a Zipper with an id, tab html, and tab panel html.
+{-| The model contains tabpanels and the groupid for the tab collection.
 -}
 type alias Model =
+    { tabPanels : TabPanels
+    , groupId : String
+    }
+
+
+{-| Zipper tabs are represented as a Zipper with an id, tab html, and tab panel html.
+-}
+type alias TabPanels =
     Zipper ( Int, Html Never, Html Never )
 
 

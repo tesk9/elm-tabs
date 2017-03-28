@@ -26,17 +26,25 @@ update msg model =
             model
 
         SelectPreviousTab ->
-            model
+            model.tabPanels
                 |> Zipper.previous
-                |> Maybe.withDefault (Zipper.last model)
+                |> Maybe.withDefault (Zipper.last model.tabPanels)
+                |> updateTabPanels model
 
         SelectCurrentTab identifier ->
-            model
+            model.tabPanels
                 |> Zipper.first
                 |> Zipper.find (\( id, _, _ ) -> id == identifier)
-                |> Maybe.withDefault model
+                |> Maybe.withDefault model.tabPanels
+                |> updateTabPanels model
 
         SelectNextTab ->
-            model
+            model.tabPanels
                 |> Zipper.next
-                |> Maybe.withDefault (Zipper.first model)
+                |> Maybe.withDefault (Zipper.first model.tabPanels)
+                |> updateTabPanels model
+
+
+updateTabPanels : Model -> Model.TabPanels -> Model
+updateTabPanels model newTabPanels =
+    { model | tabPanels = newTabPanels }

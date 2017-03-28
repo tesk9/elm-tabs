@@ -18,7 +18,7 @@ main =
     Html.beginnerProgram
         { model = model
         , update = update
-        , view = view "test-view-container"
+        , view = view
         }
 
 
@@ -33,7 +33,9 @@ model =
                 |> List.indexedMap toViewTuple
                 |> Z.fromList
     in
-        Maybe.withDefault default model
+        { tabPanels = Maybe.withDefault default model
+        , groupId = "test-view-container"
+        }
 
 
 toViewTuple : a -> ( String, String ) -> ( a, Html.Html Never, Html.Html Never )

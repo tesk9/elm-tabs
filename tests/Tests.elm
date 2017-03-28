@@ -2,11 +2,10 @@ module Tests exposing (..)
 
 import Html exposing (..)
 import List.Zipper as Zipper
-import Model exposing (Model)
+import Model exposing (Model, TabPanels)
 import Test exposing (..)
 import Test.Html.Query as Query
 import Test.Html.Selector as Selector
-import Update
 import View
 
 
@@ -58,11 +57,14 @@ tabsTests =
             ]
 
 
-testCurrentTab : Model -> ( Int, String, String ) -> List Test
+testCurrentTab : TabPanels -> ( Int, String, String ) -> List Test
 testCurrentTab tabPanelPairsZipper ( index, tabContent, panelContent ) =
     let
         queryView =
-            View.view "group-id" tabPanelPairsZipper
+            { groupId = "group-id"
+            , tabPanels = tabPanelPairsZipper
+            }
+                |> View.view
                 |> Query.fromHtml
 
         tabSelector =
