@@ -58,7 +58,7 @@ tabsTests =
             ]
 
 
-testCurrentTab : Model (Update.Msg Int) Int -> ( Int, String, String ) -> List Test
+testCurrentTab : Model -> ( Int, String, String ) -> List Test
 testCurrentTab tabPanelPairsZipper ( index, tabContent, panelContent ) =
     let
         queryView =

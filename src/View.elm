@@ -12,32 +12,24 @@ import Html.CssHelpers
 import Html.Events exposing (onClick)
 import Key exposing (..)
 import List.Zipper as Zipper
-import Model exposing (Model)
+import Model exposing (Model, TabAndPanel)
 import Styles exposing (..)
 import Update exposing (Msg(..))
 
 
 {-| Create a tab interface. Pass in a unique id and a zipper of (tab header content, panel content) pairs.
 -}
-view : String -> Model Msg -> Html Msg
+view : String -> Model -> Html Msg
 view groupId model =
     let
-        toTabPanelWithIds section isSelected ( id, tabContent, panelContent ) =
-            ( id, viewTab groupId isSelected section id tabContent, viewPanel groupId isSelected section id panelContent )
-
-        viewPreviousTabPanel tabPanelTuple =
-            toTabPanelWithIds "previous-" False tabPanelTuple
-
-        viewUpcomingTabPanel tabPanelTuple =
-            toTabPanelWithIds "upcoming-" False tabPanelTuple
-
         ( tabs, panels ) =
             model
-                |> Zipper.mapBefore (List.map viewPreviousTabPanel)
-                |> Zipper.mapCurrent (toTabPanelWithIds "current-" True)
-                |> Zipper.mapAfter (List.map viewUpcomingTabPanel)
+                |> Zipper.map Model.tabAndPanel
+                |> Zipper.mapBefore (List.map (Model.section "previous-"))
+                |> Zipper.mapCurrent (Model.selected >> Model.section "current-")
+                |> Zipper.mapAfter (List.map (Model.section "upcoming-"))
+                |> Zipper.map (\tabAndPanel -> ( viewTab groupId tabAndPanel, viewPanel groupId tabAndPanel ))
                 |> Zipper.toList
-                |> List.map (\( _, tab, panel ) -> ( tab, panel ))
                 |> List.unzip
     in
         div
@@ -57,8 +49,8 @@ panelId groupId section identifier =
     groupId ++ "-tabPanel-" ++ section ++ toString identifier
 
 
-viewTab : String -> Bool -> String -> Int -> Html Msg -> Html Msg
-viewTab groupId isSelected section identifier tabContent =
+viewTab : String -> TabAndPanel -> Html Msg
+viewTab groupId { tabContent, isSelected, section, identifier } =
     tab
         [ id (tabId groupId section identifier)
         , classList [ ( Tab, True ), ( SelectedTab, isSelected ) ]
@@ -71,11 +63,11 @@ viewTab groupId isSelected section identifier tabContent =
         , A11yAttributes.controls (panelId groupId section identifier)
         , A11yAttributes.selected isSelected
         ]
-        [ tabContent ]
+        [ Html.map never tabContent ]
 
 
-viewPanel : String -> Bool -> String -> Int -> Html Msg -> Html Msg
-viewPanel groupId isSelected section identifier panelContent =
+viewPanel : String -> TabAndPanel -> Html Msg
+viewPanel groupId { panelContent, isSelected, section, identifier } =
     tabPanel
         [ id (panelId groupId section identifier)
         , class [ TabPanel ]
@@ -83,4 +75,4 @@ viewPanel groupId isSelected section identifier panelContent =
         , A11yAttributes.hidden (not isSelected)
         , Html.Attributes.hidden (not isSelected)
         ]
-        [ panelContent ]
+        [ Html.map never panelContent ]

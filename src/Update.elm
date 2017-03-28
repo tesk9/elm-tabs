@@ -19,7 +19,7 @@ type Msg
 
 {-| Map over this to select a tab.
 -}
-update : Msg -> Model Msg -> Model Msg
+update : Msg -> Model -> Model
 update msg model =
     case msg of
         NoOp ->

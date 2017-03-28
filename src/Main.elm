@@ -13,7 +13,7 @@ import List.Zipper as Z
 
 {-| main
 -}
-main : Program Never (Model Update.Msg) Update.Msg
+main : Program Never Model Update.Msg
 main =
     Html.beginnerProgram
         { model = model
@@ -22,7 +22,7 @@ main =
         }
 
 
-model : Model msg
+model : Model
 model =
     let
         default =
@@ -36,9 +36,9 @@ model =
         Maybe.withDefault default model
 
 
-toViewTuple : a -> ( String, String ) -> ( a, Html.Html msg, Html.Html msg )
+toViewTuple : a -> ( String, String ) -> ( a, Html.Html Never, Html.Html Never )
 toViewTuple index ( tabContent, panelContent ) =
-    ( index, header tabContent, panel panelContent )
+    ( index, Html.map never <| header tabContent, Html.map never <| panel panelContent )
 
 
 header : String -> Html.Html msg
