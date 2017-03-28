@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
-    "summary": "helpful summary of your project, less than 80 characters",
-    "repository": "https://github.com/user/project.git",
+    "summary": "Accessible tab widget using tesk9/elm-html-a11y.",
+    "repository": "https://github.com/tesk9/elm-tabs.git",
     "license": "BSD3",
     "source-directories": [
         "src"
