@@ -1,12 +1,12 @@
 module Tests exposing (..)
 
-import Expect
 import Html exposing (..)
 import List.Zipper as Zipper
-import String
+import Model exposing (Model)
 import Test exposing (..)
 import Test.Html.Query as Query
 import Test.Html.Selector as Selector
+import Update
 import View
 
 
@@ -58,7 +58,7 @@ tabsTests =
             ]
 
 
-testCurrentTab : Model Int -> ( Int, String, String ) -> List Test
+testCurrentTab : Model (Update.Msg Int) Int -> ( Int, String, String ) -> List Test
 testCurrentTab tabPanelPairsZipper ( index, tabContent, panelContent ) =
     let
         queryView =
