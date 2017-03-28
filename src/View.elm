@@ -22,39 +22,8 @@ import Update exposing (Msg(..))
 view : String -> Model (Msg comparable) comparable -> Html (Msg comparable)
 view groupId model =
     let
-        tabId section identifier =
-            groupId ++ "-tab-" ++ section ++ toString identifier
-
-        panelId section identifier =
-            groupId ++ "-tabPanel-" ++ section ++ toString identifier
-
-        viewTab : Bool -> String -> comparable -> Html (Msg comparable) -> Html (Msg comparable)
-        viewTab isSelected section identifier tabContent =
-            tab
-                [ id (tabId section identifier)
-                , onClick (SelectCurrentTab identifier)
-                , onKeyDown
-                    [ enter (SelectCurrentTab identifier)
-                    , left SelectPreviousTab
-                    , right SelectNextTab
-                    ]
-                , A11yAttributes.controls (panelId section identifier)
-                , A11yAttributes.selected isSelected
-                ]
-                [ tabContent ]
-
-        viewPanel : Bool -> String -> comparable -> Html (Msg comparable) -> Html (Msg comparable)
-        viewPanel isSelected section identifier panelContent =
-            tabPanel
-                [ id (panelId section identifier)
-                , A11yAttributes.labelledBy (tabId section identifier)
-                , A11yAttributes.hidden (not isSelected)
-                , Html.Attributes.hidden (not isSelected)
-                ]
-                [ panelContent ]
-
         toTabPanelWithIds section isSelected ( id, tabContent, panelContent ) =
-            ( id, viewTab isSelected section id tabContent, viewPanel isSelected section id panelContent )
+            ( id, viewTab groupId isSelected section id tabContent, viewPanel groupId isSelected section id panelContent )
 
         viewPreviousTabPanel tabPanelTuple =
             toTabPanelWithIds "previous-" False tabPanelTuple
@@ -76,3 +45,40 @@ view groupId model =
             [ Html.CssHelpers.style css
             , div [] (tabList [ id groupId ] tabs :: panels)
             ]
+
+
+tabId : String -> String -> a -> String
+tabId groupId section identifier =
+    groupId ++ "-tab-" ++ section ++ toString identifier
+
+
+panelId : String -> String -> a -> String
+panelId groupId section identifier =
+    groupId ++ "-tabPanel-" ++ section ++ toString identifier
+
+
+viewTab : String -> Bool -> String -> comparable -> Html (Msg comparable) -> Html (Msg comparable)
+viewTab groupId isSelected section identifier tabContent =
+    tab
+        [ id (tabId groupId section identifier)
+        , onClick (SelectCurrentTab identifier)
+        , onKeyDown
+            [ enter (SelectCurrentTab identifier)
+            , left SelectPreviousTab
+            , right SelectNextTab
+            ]
+        , A11yAttributes.controls (panelId groupId section identifier)
+        , A11yAttributes.selected isSelected
+        ]
+        [ tabContent ]
+
+
+viewPanel : String -> Bool -> String -> comparable -> Html (Msg comparable) -> Html (Msg comparable)
+viewPanel groupId isSelected section identifier panelContent =
+    tabPanel
+        [ id (panelId groupId section identifier)
+        , A11yAttributes.labelledBy (tabId groupId section identifier)
+        , A11yAttributes.hidden (not isSelected)
+        , Html.Attributes.hidden (not isSelected)
+        ]
+        [ panelContent ]
