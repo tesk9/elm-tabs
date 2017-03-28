@@ -24,15 +24,31 @@ main =
 
 model : Model (Update.Msg Int) Int
 model =
-    Maybe.withDefault (Z.singleton ( 0, Html.text "failed", Html.text "failed" )) <|
-        Z.fromList <|
-            List.indexedMap
-                (\index ( tabContent, panelContent ) ->
-                    ( index, Html.h2 [] [ Html.text tabContent ], Html.div [] [ Html.text panelContent ] )
-                )
-                [ ( "Tab1", "Panel1" )
-                , ( "Tab2", "Panel2" )
-                , ( "Tab3", "Panel3" )
-                , ( "Tab4", "Panel4" )
-                , ( "Tab5", "Panel5" )
-                ]
+    let
+        default =
+            Z.singleton ( 0, Html.text "failed", Html.text "failed" )
+
+        model =
+            [ ( "Tab1", "Panel1" ), ( "Tab2", "Panel2" ), ( "Tab3", "Panel3" ), ( "Tab4", "Panel4" ), ( "Tab5", "Panel5" ) ]
+                |> List.indexedMap toViewTuple
+                |> Z.fromList
+    in
+        Maybe.withDefault default model
+
+
+toViewTuple : a -> ( String, String ) -> ( a, Html.Html msg, Html.Html msg )
+toViewTuple index ( tabContent, panelContent ) =
+    ( index, header tabContent, panel panelContent )
+
+
+header : String -> Html.Html msg
+header tabContent =
+    Html.h2 [] [ Html.text tabContent ]
+
+
+panel : String -> Html.Html msg
+panel panelContent =
+    Html.div []
+        [ Html.h3 [] [ Html.text panelContent ]
+        , Html.text panelContent
+        ]
