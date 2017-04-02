@@ -1,12 +1,16 @@
 {
-    "version": "1.0.0",
+    "version": "2.0.0",
     "summary": "Accessible tab widget using tesk9/elm-html-a11y.",
     "repository": "https://github.com/tesk9/elm-tabs.git",
     "license": "BSD3",
     "source-directories": [
         "src"
     ],
-    "exposed-modules": ["Tabs.Model", "Tabs.View", "Tabs.Update"],
+    "exposed-modules": [
+        "Tabs.Model",
+        "Tabs.View",
+        "Tabs.Update"
+    ],
     "dependencies": {
         "NoRedInk/elm-decode-pipeline": "3.0.0 <= v < 4.0.0",
         "elm-lang/core": "5.1.1 <= v < 6.0.0",
