@@ -1,4 +1,4 @@
-module Styles
+module Tabs.Styles
     exposing
         ( Classes(..)
         , css

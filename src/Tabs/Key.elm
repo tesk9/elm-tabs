@@ -1,4 +1,4 @@
-module Key exposing (onKeyDown, enter, right, left)
+module Tabs.Key exposing (onKeyDown, enter, right, left)
 
 {-|
 @docs onKeyDown, enter, right, left

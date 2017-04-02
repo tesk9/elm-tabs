@@ -5,15 +5,15 @@ module Main exposing (main)
 -}
 
 import Html
-import Model exposing (Model)
-import Update exposing (update)
-import View exposing (view)
+import Tabs.Model exposing (Model)
+import Tabs.Update exposing (update)
+import Tabs.View exposing (view)
 import List.Zipper as Z
 
 
 {-| main
 -}
-main : Program Never Model Update.Msg
+main : Program Never Model Tabs.Update.Msg
 main =
     Html.beginnerProgram
         { model = model

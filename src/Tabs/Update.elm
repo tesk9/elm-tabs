@@ -1,10 +1,10 @@
-module Update exposing (update, Msg(..))
+module Tabs.Update exposing (update, Msg(..))
 
 {-|
 @docs Msg, update
 -}
 
-import Model exposing (Model)
+import Tabs.Model as Model exposing (Model)
 import List.Zipper as Zipper
 
 

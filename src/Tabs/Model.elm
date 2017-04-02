@@ -1,4 +1,4 @@
-module Model exposing (Model, TabPanels, TabAndPanel, tabAndPanel, section, selected)
+module Tabs.Model exposing (Model, TabPanels, TabAndPanel, tabAndPanel, section, selected)
 
 {-|
 @docs Model, TabPanels, TabAndPanel, tabAndPanel, section, selected

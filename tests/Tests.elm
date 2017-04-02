@@ -2,11 +2,11 @@ module Tests exposing (..)
 
 import Html exposing (..)
 import List.Zipper as Zipper
-import Model exposing (Model, TabPanels)
+import Tabs.Model exposing (Model, TabPanels)
+import Tabs.View as View
 import Test exposing (..)
 import Test.Html.Query as Query
 import Test.Html.Selector as Selector
-import View
 
 
 all : Test

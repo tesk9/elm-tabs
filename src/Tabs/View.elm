@@ -1,4 +1,4 @@
-module View exposing (view)
+module Tabs.View exposing (view)
 
 {-|
 @docs view
@@ -10,11 +10,11 @@ import Html.Attributes
 import Html.Attributes.A11y as A11yAttributes
 import Html.CssHelpers
 import Html.Events exposing (onClick)
-import Key exposing (..)
+import Tabs.Key exposing (..)
 import List.Zipper as Zipper
-import Model exposing (Model, TabAndPanel)
-import Styles exposing (..)
-import Update exposing (Msg(..))
+import Tabs.Model as Model exposing (Model, TabAndPanel)
+import Tabs.Styles exposing (..)
+import Tabs.Update exposing (Msg(..))
 
 
 {-| Create a tab interface. Pass in a unique id and a zipper of (tab header content, panel content) pairs.
