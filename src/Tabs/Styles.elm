@@ -42,6 +42,7 @@ snippets =
         , minWidth (px 150)
         , textAlign center
         , backgroundColor lightGray
+        , zIndex (int 1)
         ]
     , Css.class SelectedTab
         [ borderBottomColor white
@@ -52,7 +53,6 @@ snippets =
         , borderBottomRadius (px 8)
         , position relative
         , top (px -1)
-        , zIndex (int -1)
         , padding (px 30)
         ]
     ]
