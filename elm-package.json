@@ -1,5 +1,5 @@
 {
-    "version": "2.0.1",
+    "version": "2.0.2",
     "summary": "Accessible tab widget using tesk9/elm-html-a11y.",
     "repository": "https://github.com/tesk9/elm-tabs.git",
     "license": "BSD3",
