@@ -1,7 +1,7 @@
 {
   "name": "elm-tabs",
   "version": "1.0.0",
-  "description": "Accessible tab widget using [`elm-html-a11y`](package.elm-lang.org/packages/tesk9/elm-html-a11y/latest).",
+  "description": "Accessible tab widget using [`accessible-html`](package.elm-lang.org/packages/tesk9/accessible-html/latest).",
   "main": "elm.js",
   "directories": {
     "test": "tests"
@@ -14,5 +14,9 @@
   "bugs": {
     "url": "https://github.com/tesk9/elm-tabs/issues"
   },
-  "homepage": "https://github.com/tesk9/elm-tabs#readme"
+  "homepage": "https://github.com/tesk9/elm-tabs#readme",
+  "devDependencies": {
+    "elm": "0.18.0",
+    "elm-test": "0.18.8"
+  }
 }
