@@ -1,47 +1,56 @@
 # elm-tabs
 ![](https://travis-ci.org/tesk9/elm-tabs.svg?branch=master)
 
-Accessible tab widget using [`elm-html-a11y`](package.elm-lang.org/packages/tesk9/elm-html-a11y/latest).
+Accessible tab widget using [`accessible-html`](package.elm-lang.org/packages/tesk9/accessible-html/latest).
 
 #### Example:
 
 ```
-import Html
-import Model exposing (Model)
-import Update exposing (update)
-import View exposing (view)
-import List.Zipper as Z
+import Html exposing (beginnerProgram)
+import Accessibility as Html exposing (..)
+import List.Zipper exposing (Zipper)
+import Tabs.Model exposing (Model)
+import Tabs.Update exposing (update)
+import Tabs.View exposing (view)
 
-model : Model
-model =
-    let
-        default =
-            Z.singleton ( 0, Html.text "failed", Html.text "failed" )
 
-        model =
-            [ ( "Tab1", "Panel1" ), ( "Tab2", "Panel2" ), ( "Tab3", "Panel3" ), ( "Tab4", "Panel4" ), ( "Tab5", "Panel5" ) ]
-                |> List.indexedMap toViewTuple
-                |> Z.fromList
-    in
-        { tabPanels = Maybe.withDefault default model
-        , groupId = "test-view-container"
+main : Program Never Model Tabs.Update.Msg
+main =
+    beginnerProgram
+        { model = model
+        , update = update
+        , view = view
         }
 
 
-toViewTuple : a -> ( String, String ) -> ( a, Html.Html Never, Html.Html Never )
-toViewTuple index ( tabContent, panelContent ) =
-    ( index, header tabContent, panel panelContent )
+model : Model
+model =
+    { groupId = "test-view-container"
+    , tabPanels = initZipper
+    }
 
 
-header : String -> Html.Html msg
+initZipper : Zipper ( Int, Html Never, Html Never )
+initZipper =
+    List.Zipper.Zipper
+        []
+        ( 0, header "Tab1", panel "Panel1" )
+        [ ( 1, header "Tab2", panel "Panel2" )
+        , ( 2, header "Tab3", panel "Panel3" )
+        , ( 3, header "Tab4", panel "Panel4" )
+        , ( 4, header "Tab5", panel "Panel5" )
+        ]
+
+
+header : String -> Html msg
 header tabContent =
-    Html.h2 [] [ Html.text tabContent ]
+    h2 [] [ text tabContent ]
 
 
-panel : String -> Html.Html msg
+panel : String -> Html msg
 panel panelContent =
-    Html.div []
-        [ Html.h3 [] [ Html.text panelContent ]
-        , Html.text panelContent
+    div []
+        [ h3 [] [ text panelContent ]
+        , text panelContent
         ]
 ```

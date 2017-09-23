@@ -1,21 +1,24 @@
 module Main exposing (main)
 
 {-|
+
 @docs main
+
 -}
 
-import Html
+import Accessibility as Html exposing (..)
+import Html exposing (beginnerProgram)
+import List.Zipper exposing (Zipper)
 import Tabs.Model exposing (Model)
 import Tabs.Update exposing (update)
 import Tabs.View exposing (view)
-import List.Zipper as Z
 
 
 {-| main
 -}
 main : Program Never Model Tabs.Update.Msg
 main =
-    Html.beginnerProgram
+    beginnerProgram
         { model = model
         , update = update
         , view = view
@@ -24,33 +27,31 @@ main =
 
 model : Model
 model =
-    let
-        default =
-            Z.singleton ( 0, Html.text "failed", Html.text "failed" )
-
-        model =
-            [ ( "Tab1", "Panel1" ), ( "Tab2", "Panel2" ), ( "Tab3", "Panel3" ), ( "Tab4", "Panel4" ), ( "Tab5", "Panel5" ) ]
-                |> List.indexedMap toViewTuple
-                |> Z.fromList
-    in
-        { tabPanels = Maybe.withDefault default model
-        , groupId = "test-view-container"
-        }
+    { groupId = "test-view-container"
+    , tabPanels = initZipper
+    }
 
 
-toViewTuple : a -> ( String, String ) -> ( a, Html.Html Never, Html.Html Never )
-toViewTuple index ( tabContent, panelContent ) =
-    ( index, header tabContent, panel panelContent )
+initZipper : Zipper ( Int, Html Never, Html Never )
+initZipper =
+    List.Zipper.Zipper
+        []
+        ( 0, header "Tab1", panel "Panel1" )
+        [ ( 1, header "Tab2", panel "Panel2" )
+        , ( 2, header "Tab3", panel "Panel3" )
+        , ( 3, header "Tab4", panel "Panel4" )
+        , ( 4, header "Tab5", panel "Panel5" )
+        ]
 
 
-header : String -> Html.Html msg
+header : String -> Html msg
 header tabContent =
-    Html.h2 [] [ Html.text tabContent ]
+    h2 [] [ text tabContent ]
 
 
-panel : String -> Html.Html msg
+panel : String -> Html msg
 panel panelContent =
-    Html.div []
-        [ Html.h3 [] [ Html.text panelContent ]
-        , Html.text panelContent
+    div []
+        [ h3 [] [ text panelContent ]
+        , text panelContent
         ]

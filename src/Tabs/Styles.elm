@@ -1,14 +1,16 @@
 module Tabs.Styles
     exposing
         ( Classes(..)
-        , css
         , class
-        , id
         , classList
+        , css
+        , id
         )
 
 {-|
+
 @docs Classes, css, class, id, classList
+
 -}
 
 import Css exposing (..)
@@ -58,17 +60,17 @@ snippets =
     ]
 
 
-borderTopRadius : Length compatible units -> Mixin
+borderTopRadius : Length compatible units -> Style
 borderTopRadius setting =
-    mixin
+    batch
         [ borderTopLeftRadius setting
         , borderTopRightRadius setting
         ]
 
 
-borderBottomRadius : Length compatible units -> Mixin
+borderBottomRadius : Length compatible units -> Style
 borderBottomRadius setting =
-    mixin
+    batch
         [ borderBottomLeftRadius setting
         , borderBottomRightRadius setting
         ]
