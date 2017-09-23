@@ -1,14 +1,16 @@
 module Main exposing (main)
 
 {-|
+
 @docs main
+
 -}
 
 import Html
+import List.Zipper as Z
 import Tabs.Model exposing (Model)
 import Tabs.Update exposing (update)
 import Tabs.View exposing (view)
-import List.Zipper as Z
 
 
 {-| main
@@ -33,9 +35,9 @@ model =
                 |> List.indexedMap toViewTuple
                 |> Z.fromList
     in
-        { tabPanels = Maybe.withDefault default model
-        , groupId = "test-view-container"
-        }
+    { tabPanels = Maybe.withDefault default model
+    , groupId = "test-view-container"
+    }
 
 
 toViewTuple : a -> ( String, String ) -> ( a, Html.Html Never, Html.Html Never )
