@@ -7,7 +7,6 @@ module Main exposing (main)
 -}
 
 import Accessibility as Html exposing (..)
-import Html exposing (beginnerProgram)
 import List.Zipper exposing (Zipper)
 import Tabs.Model exposing (Model)
 import Tabs.Update exposing (update)

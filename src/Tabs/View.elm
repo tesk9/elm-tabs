@@ -8,13 +8,13 @@ module Tabs.View exposing (view)
 
 import Accessibility as Html exposing (..)
 import Accessibility.Aria exposing (controls, labelledBy)
+import Accessibility.Key exposing (enter, left, onKeyDown, right)
 import Accessibility.Widget exposing (hidden, selected)
 import Html
 import Html.Attributes
 import Html.CssHelpers
 import Html.Events exposing (onClick)
 import List.Zipper as Zipper
-import Tabs.Key exposing (..)
 import Tabs.Model as Model exposing (Model, TabAndPanel)
 import Tabs.Styles exposing (..)
 import Tabs.Update exposing (Msg(..))
@@ -63,8 +63,8 @@ viewTab groupId { tabContent, isSelected, section, identifier } =
             , left SelectPreviousTab
             , right SelectNextTab
             ]
-        , controls (panelId groupId section identifier)
-        , selected isSelected
+        , nonInteractive (controls (panelId groupId section identifier))
+        , nonInteractive (selected isSelected)
         ]
         [ Html.map never tabContent ]
 
@@ -79,3 +79,8 @@ viewPanel groupId { panelContent, isSelected, section, identifier } =
         , Html.Attributes.hidden (not isSelected)
         ]
         [ Html.map never panelContent ]
+
+
+nonInteractive : Attribute Never -> Attribute a
+nonInteractive =
+    Html.Attributes.map Basics.never
