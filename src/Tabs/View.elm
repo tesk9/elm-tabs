@@ -63,8 +63,8 @@ viewTab groupId { tabContent, isSelected, section, identifier } =
             , left SelectPreviousTab
             , right SelectNextTab
             ]
-        , nonInteractive (controls (panelId groupId section identifier))
-        , nonInteractive (selected isSelected)
+        , controls (panelId groupId section identifier)
+        , selected isSelected
         ]
         [ Html.map never tabContent ]
 
@@ -79,8 +79,3 @@ viewPanel groupId { panelContent, isSelected, section, identifier } =
         , Html.Attributes.hidden (not isSelected)
         ]
         [ Html.map never panelContent ]
-
-
-nonInteractive : Attribute Never -> Attribute a
-nonInteractive =
-    Html.Attributes.map Basics.never
